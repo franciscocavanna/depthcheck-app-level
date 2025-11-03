@@ -16,43 +16,88 @@ export type Database = {
     Tables: {
       clientes: {
         Row: {
+          aging30: number | null
+          aging60: number | null
+          aging90: number | null
           alias_banco: string | null
+          antiguedad_meses: number | null
           banco_preferido: string | null
           canal_preferido: string | null
           cbu_banco: string | null
+          concent_top3: number | null
           created_at: string | null
           cuit: string | null
+          deuda_total: number | null
+          deuda_vencida: number | null
+          dso_180: number | null
           email: string | null
+          fecha_update: string | null
           hora_preferida_pago: string | null
           id: string
+          pay_score_color: string | null
+          pct_on_time_180: number | null
+          pd_180: number | null
           razon_social: string
+          sector: string | null
           telefono: string | null
+          tendencia_pd: number | null
+          ventas_12m: number | null
         }
         Insert: {
+          aging30?: number | null
+          aging60?: number | null
+          aging90?: number | null
           alias_banco?: string | null
+          antiguedad_meses?: number | null
           banco_preferido?: string | null
           canal_preferido?: string | null
           cbu_banco?: string | null
+          concent_top3?: number | null
           created_at?: string | null
           cuit?: string | null
+          deuda_total?: number | null
+          deuda_vencida?: number | null
+          dso_180?: number | null
           email?: string | null
+          fecha_update?: string | null
           hora_preferida_pago?: string | null
           id?: string
+          pay_score_color?: string | null
+          pct_on_time_180?: number | null
+          pd_180?: number | null
           razon_social: string
+          sector?: string | null
           telefono?: string | null
+          tendencia_pd?: number | null
+          ventas_12m?: number | null
         }
         Update: {
+          aging30?: number | null
+          aging60?: number | null
+          aging90?: number | null
           alias_banco?: string | null
+          antiguedad_meses?: number | null
           banco_preferido?: string | null
           canal_preferido?: string | null
           cbu_banco?: string | null
+          concent_top3?: number | null
           created_at?: string | null
           cuit?: string | null
+          deuda_total?: number | null
+          deuda_vencida?: number | null
+          dso_180?: number | null
           email?: string | null
+          fecha_update?: string | null
           hora_preferida_pago?: string | null
           id?: string
+          pay_score_color?: string | null
+          pct_on_time_180?: number | null
+          pd_180?: number | null
           razon_social?: string
+          sector?: string | null
           telefono?: string | null
+          tendencia_pd?: number | null
+          ventas_12m?: number | null
         }
         Relationships: []
       }
@@ -167,44 +212,95 @@ export type Database = {
         }
         Relationships: []
       }
+      eventos: {
+        Row: {
+          entidad_id: string | null
+          entidad_tipo: string
+          id: string
+          payload_json: Json | null
+          timestamp: string | null
+          tipo_evento: string
+          usuario_id: string | null
+        }
+        Insert: {
+          entidad_id?: string | null
+          entidad_tipo: string
+          id?: string
+          payload_json?: Json | null
+          timestamp?: string | null
+          tipo_evento: string
+          usuario_id?: string | null
+        }
+        Update: {
+          entidad_id?: string | null
+          entidad_tipo?: string
+          id?: string
+          payload_json?: Json | null
+          timestamp?: string | null
+          tipo_evento?: string
+          usuario_id?: string | null
+        }
+        Relationships: []
+      }
       facturas: {
         Row: {
+          canal_entrega: string | null
           cliente_id: string
           created_at: string | null
+          devoluciones: number | null
           estado: string | null
           fecha_emision: string
           fecha_vencimiento: string
           id: string
+          inv_score: number | null
           moneda: string | null
           monto: number
+          monto_pagado: number | null
           notas: string | null
           numero: string
+          pd30: number | null
+          pd90: number | null
+          recomendacion_json: Json | null
           referencia_pago: string | null
         }
         Insert: {
+          canal_entrega?: string | null
           cliente_id: string
           created_at?: string | null
+          devoluciones?: number | null
           estado?: string | null
           fecha_emision: string
           fecha_vencimiento: string
           id?: string
+          inv_score?: number | null
           moneda?: string | null
           monto: number
+          monto_pagado?: number | null
           notas?: string | null
           numero: string
+          pd30?: number | null
+          pd90?: number | null
+          recomendacion_json?: Json | null
           referencia_pago?: string | null
         }
         Update: {
+          canal_entrega?: string | null
           cliente_id?: string
           created_at?: string | null
+          devoluciones?: number | null
           estado?: string | null
           fecha_emision?: string
           fecha_vencimiento?: string
           id?: string
+          inv_score?: number | null
           moneda?: string | null
           monto?: number
+          monto_pagado?: number | null
           notas?: string | null
           numero?: string
+          pd30?: number | null
+          pd90?: number | null
+          recomendacion_json?: Json | null
           referencia_pago?: string | null
         }
         Relationships: [
@@ -271,6 +367,86 @@ export type Database = {
           },
         ]
       }
+      modelos: {
+        Row: {
+          calibracion_json: Json | null
+          champion: boolean | null
+          created_at: string | null
+          dataset_size: number | null
+          explicabilidad_json: Json | null
+          id: string
+          metrics_json: Json
+          objetivo: string
+          tipo_motor: string
+          updated_at: string | null
+          version: string
+        }
+        Insert: {
+          calibracion_json?: Json | null
+          champion?: boolean | null
+          created_at?: string | null
+          dataset_size?: number | null
+          explicabilidad_json?: Json | null
+          id?: string
+          metrics_json?: Json
+          objetivo: string
+          tipo_motor: string
+          updated_at?: string | null
+          version: string
+        }
+        Update: {
+          calibracion_json?: Json | null
+          champion?: boolean | null
+          created_at?: string | null
+          dataset_size?: number | null
+          explicabilidad_json?: Json | null
+          id?: string
+          metrics_json?: Json
+          objetivo?: string
+          tipo_motor?: string
+          updated_at?: string | null
+          version?: string
+        }
+        Relationships: []
+      }
+      pagos: {
+        Row: {
+          created_at: string | null
+          factura_id: string | null
+          fecha_pago: string
+          id: string
+          metodo: string | null
+          monto_pago: number
+          nota: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          factura_id?: string | null
+          fecha_pago: string
+          id?: string
+          metodo?: string | null
+          monto_pago: number
+          nota?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          factura_id?: string | null
+          fecha_pago?: string
+          id?: string
+          metodo?: string | null
+          monto_pago?: number
+          nota?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "pagos_factura_id_fkey"
+            columns: ["factura_id"]
+            isOneToOne: false
+            referencedRelation: "facturas"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       playbooks: {
         Row: {
           activo: boolean | null
@@ -301,6 +477,42 @@ export type Database = {
           pasos_json?: Json
           trigger?: string | null
           updated_at?: string | null
+        }
+        Relationships: []
+      }
+      politicas: {
+        Row: {
+          activo: boolean | null
+          created_at: string | null
+          descuentos_json: Json | null
+          id: string
+          matriz_json: Json
+          stop_supply_json: Json | null
+          umbrales_json: Json
+          updated_at: string | null
+          version: string
+        }
+        Insert: {
+          activo?: boolean | null
+          created_at?: string | null
+          descuentos_json?: Json | null
+          id?: string
+          matriz_json?: Json
+          stop_supply_json?: Json | null
+          umbrales_json?: Json
+          updated_at?: string | null
+          version: string
+        }
+        Update: {
+          activo?: boolean | null
+          created_at?: string | null
+          descuentos_json?: Json | null
+          id?: string
+          matriz_json?: Json
+          stop_supply_json?: Json | null
+          umbrales_json?: Json
+          updated_at?: string | null
+          version?: string
         }
         Relationships: []
       }
