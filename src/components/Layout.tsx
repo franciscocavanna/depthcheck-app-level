@@ -73,14 +73,15 @@ const Layout = ({ children }: LayoutProps) => {
   }
 
   const navItems = [
-    { icon: LayoutDashboard, label: "Dashboard", path: "/dashboard" },
-    { icon: FileText, label: "Prioridad", path: "/prioridad" },
+    { icon: LayoutDashboard, label: "Demo Center", path: "/dashboard" },
+    { icon: FileText, label: "Facturas", path: "/prioridad" },
     { icon: Users, label: "Clientes", path: "/clientes" },
+    { icon: LayoutDashboard, label: "Modelos", path: "/modelos" },
+    { icon: LayoutDashboard, label: "Simulador", path: "/simulador" },
     { icon: CreditCard, label: "Pagos", path: "/pagos" },
-    { icon: BookOpen, label: "Playbooks", path: "/playbooks" },
+    { icon: BookOpen, label: "Dunning", path: "/playbooks" },
     { icon: Calendar, label: "Promesas", path: "/promesas" },
-    { icon: Upload, label: "Importar", path: "/importar" },
-    { icon: Settings, label: "Configuración", path: "/configuracion" },
+    { icon: Upload, label: "Data Hub", path: "/importar" },
   ];
 
   const NavLinks = ({ mobile = false }: { mobile?: boolean }) => (
@@ -114,7 +115,7 @@ const Layout = ({ children }: LayoutProps) => {
       <aside className="hidden md:fixed md:inset-y-0 md:flex md:w-64 md:flex-col">
         <div className="flex flex-col flex-grow border-r bg-card overflow-y-auto">
           <div className="flex items-center h-16 px-6 border-b">
-            <h1 className="text-2xl font-bold text-primary">CobraPro</h1>
+            <h1 className="text-2xl font-bold text-primary">DepthCheck v3</h1>
           </div>
           <nav className="flex-1 space-y-1 px-4 py-4">
             <NavLinks />
@@ -139,7 +140,7 @@ const Layout = ({ children }: LayoutProps) => {
 
       {/* Mobile Header */}
       <div className="md:hidden flex items-center justify-between h-16 px-4 border-b bg-card">
-        <h1 className="text-xl font-bold text-primary">CobraPro</h1>
+        <h1 className="text-xl font-bold text-primary">DepthCheck v3</h1>
         <Sheet>
           <SheetTrigger asChild>
             <Button variant="ghost" size="icon">
@@ -149,7 +150,7 @@ const Layout = ({ children }: LayoutProps) => {
           <SheetContent side="left" className="w-64 p-0">
             <div className="flex flex-col h-full">
               <div className="flex items-center h-16 px-6 border-b">
-                <h1 className="text-2xl font-bold text-primary">CobraPro</h1>
+                <h1 className="text-2xl font-bold text-primary">DepthCheck v3</h1>
               </div>
               <nav className="flex-1 space-y-1 px-4 py-4">
                 <NavLinks mobile />

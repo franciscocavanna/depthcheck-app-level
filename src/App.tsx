@@ -13,6 +13,8 @@ import Playbooks from "./pages/Playbooks";
 import Promesas from "./pages/Promesas";
 import Importar from "./pages/Importar";
 import Configuracion from "./pages/Configuracion";
+import Modelos from "./pages/Modelos";
+import Simulador from "./pages/Simulador";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -33,6 +35,8 @@ const App = () => (
           <Route path="/playbooks" element={<Playbooks />} />
           <Route path="/promesas" element={<Promesas />} />
           <Route path="/importar" element={<Importar />} />
+          <Route path="/modelos" element={<Modelos />} />
+          <Route path="/simulador" element={<Simulador />} />
           <Route path="/configuracion" element={<Configuracion />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
