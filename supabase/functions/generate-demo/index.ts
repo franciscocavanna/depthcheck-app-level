@@ -91,6 +91,8 @@ serve(async (req) => {
 
     console.log(`Insertados ${clientesData.length} clientes`);
 
+    console.log('Generando facturas...');
+    
     // 2. Generar ~2000 facturas (40 por cliente en promedio)
     const facturas = [];
     const estados = ['pendiente', 'vencida', 'parcial', 'paga'];
@@ -100,6 +102,7 @@ serve(async (req) => {
       
       for (let i = 0; i < numFacturas; i++) {
         const monto = Math.exp(rng.next() * 3 + 8); // Log-normal
+        const montoRedondeado = Math.round(monto * 100) / 100;
         const diasVenc = rng.range(-30, 90);
         const fechaEmision = new Date();
         fechaEmision.setDate(fechaEmision.getDate() - 90 + i * 2);
@@ -118,10 +121,10 @@ serve(async (req) => {
         
         const factura = {
           cliente_id: cliente.id,
-          numero: `FAC-${cliente.cuit.slice(-4)}-${(i + 1).toString().padStart(4, '0')}`,
+          numero: `FAC-${(cliente.cuit || '0000').slice(-4)}-${(i + 1).toString().padStart(4, '0')}`,
           fecha_emision: fechaEmision.toISOString().split('T')[0],
           fecha_vencimiento: fechaVencimiento.toISOString().split('T')[0],
-          monto: Math.round(monto * 100) / 100,
+          monto: montoRedondeado,
           estado,
           moneda: 'ARS',
           devoluciones: rng.next() < 0.1 ? rng.range(1, 3) : 0,
@@ -129,7 +132,7 @@ serve(async (req) => {
           pd30,
           pd90: pd30 * 0.7,
           inv_score: Math.round(pd30 * 100),
-          monto_pagado: estado === 'paga' ? monto : (estado === 'parcial' ? monto * 0.5 : 0),
+          monto_pagado: estado === 'paga' ? montoRedondeado : (estado === 'parcial' ? Math.round(montoRedondeado * 0.5 * 100) / 100 : 0),
           recomendacion_json: {
             modo: pd30 > 0.25 ? 'Prepago/Escrow' : 
                   pd30 > 0.10 ? 'Anticipo+Contraentrega' : 
@@ -141,22 +144,32 @@ serve(async (req) => {
       }
     }
 
-    // Insertar facturas en lotes de 500
-    const batchSize = 500;
+    console.log(`Generadas ${facturas.length} facturas, insertando en lotes...`);
+
+    // Insertar facturas en lotes de 100 (reducido para evitar timeouts)
+    const batchSize = 100;
     let totalInserted = 0;
     
     for (let i = 0; i < facturas.length; i += batchSize) {
       const batch = facturas.slice(i, i + batchSize);
-      const { error: facturasError } = await supabase
-        .from('facturas')
-        .insert(batch);
       
-      if (facturasError) {
-        console.error('Error insertando facturas:', facturasError);
-        throw facturasError;
+      try {
+        const { error: facturasError } = await supabase
+          .from('facturas')
+          .insert(batch);
+        
+        if (facturasError) {
+          console.error('Error insertando batch de facturas:', facturasError);
+          console.error('Batch problemático:', JSON.stringify(batch.slice(0, 2)));
+          throw facturasError;
+        }
+        
+        totalInserted += batch.length;
+        console.log(`Insertadas ${totalInserted}/${facturas.length} facturas`);
+      } catch (batchError) {
+        console.error('Error en batch:', batchError);
+        throw batchError;
       }
-      totalInserted += batch.length;
-      console.log(`Insertadas ${totalInserted}/${facturas.length} facturas`);
     }
 
     // 3. Registrar evento
