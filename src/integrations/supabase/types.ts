@@ -173,44 +173,122 @@ export type Database = {
       config: {
         Row: {
           alias_empresa: string | null
+          beta_plazo: number | null
           cbu_empresa: string | null
           created_at: string | null
           cuit_empresa: string | null
           formato_referencia_ej: string | null
+          gamma_riesgo: number | null
           horario_contacto_fin: string | null
           horario_contacto_inicio: string | null
           id: string
+          inflacion_anual: number | null
+          lgd: number | null
+          tasa_libre_anual: number | null
           tolerancia_monto_porcentual: number | null
           updated_at: string | null
           ventana_dias_match: number | null
         }
         Insert: {
           alias_empresa?: string | null
+          beta_plazo?: number | null
           cbu_empresa?: string | null
           created_at?: string | null
           cuit_empresa?: string | null
           formato_referencia_ej?: string | null
+          gamma_riesgo?: number | null
           horario_contacto_fin?: string | null
           horario_contacto_inicio?: string | null
           id?: string
+          inflacion_anual?: number | null
+          lgd?: number | null
+          tasa_libre_anual?: number | null
           tolerancia_monto_porcentual?: number | null
           updated_at?: string | null
           ventana_dias_match?: number | null
         }
         Update: {
           alias_empresa?: string | null
+          beta_plazo?: number | null
           cbu_empresa?: string | null
           created_at?: string | null
           cuit_empresa?: string | null
           formato_referencia_ej?: string | null
+          gamma_riesgo?: number | null
           horario_contacto_fin?: string | null
           horario_contacto_inicio?: string | null
           id?: string
+          inflacion_anual?: number | null
+          lgd?: number | null
+          tasa_libre_anual?: number | null
           tolerancia_monto_porcentual?: number | null
           updated_at?: string | null
           ventana_dias_match?: number | null
         }
         Relationships: []
+      }
+      dunning_queue: {
+        Row: {
+          canal: string
+          cliente_id: string
+          created_at: string | null
+          estado: string | null
+          factura_id: string
+          fecha_enviado: string | null
+          fecha_programada: string
+          id: string
+          intentos: number | null
+          offset_dias: number
+          prioridad: number | null
+          tipo_mensaje: string
+          updated_at: string | null
+        }
+        Insert: {
+          canal: string
+          cliente_id: string
+          created_at?: string | null
+          estado?: string | null
+          factura_id: string
+          fecha_enviado?: string | null
+          fecha_programada: string
+          id?: string
+          intentos?: number | null
+          offset_dias: number
+          prioridad?: number | null
+          tipo_mensaje: string
+          updated_at?: string | null
+        }
+        Update: {
+          canal?: string
+          cliente_id?: string
+          created_at?: string | null
+          estado?: string | null
+          factura_id?: string
+          fecha_enviado?: string | null
+          fecha_programada?: string
+          id?: string
+          intentos?: number | null
+          offset_dias?: number
+          prioridad?: number | null
+          tipo_mensaje?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "dunning_queue_cliente_id_fkey"
+            columns: ["cliente_id"]
+            isOneToOne: false
+            referencedRelation: "clientes"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "dunning_queue_factura_id_fkey"
+            columns: ["factura_id"]
+            isOneToOne: false
+            referencedRelation: "facturas"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       eventos: {
         Row: {
@@ -246,13 +324,16 @@ export type Database = {
         Row: {
           canal_entrega: string | null
           cliente_id: string
+          costo_plazo: number | null
           created_at: string | null
           devoluciones: number | null
+          dias_plazo: number | null
           estado: string | null
           fecha_emision: string
           fecha_vencimiento: string
           id: string
           inv_score: number | null
+          markup_plazo: number | null
           moneda: string | null
           monto: number
           monto_pagado: number | null
@@ -266,13 +347,16 @@ export type Database = {
         Insert: {
           canal_entrega?: string | null
           cliente_id: string
+          costo_plazo?: number | null
           created_at?: string | null
           devoluciones?: number | null
+          dias_plazo?: number | null
           estado?: string | null
           fecha_emision: string
           fecha_vencimiento: string
           id?: string
           inv_score?: number | null
+          markup_plazo?: number | null
           moneda?: string | null
           monto: number
           monto_pagado?: number | null
@@ -286,13 +370,16 @@ export type Database = {
         Update: {
           canal_entrega?: string | null
           cliente_id?: string
+          costo_plazo?: number | null
           created_at?: string | null
           devoluciones?: number | null
+          dias_plazo?: number | null
           estado?: string | null
           fecha_emision?: string
           fecha_vencimiento?: string
           id?: string
           inv_score?: number | null
+          markup_plazo?: number | null
           moneda?: string | null
           monto?: number
           monto_pagado?: number | null
@@ -450,33 +537,45 @@ export type Database = {
       playbooks: {
         Row: {
           activo: boolean | null
+          config_json: Json | null
           created_at: string | null
           descripcion: string | null
           id: string
           nombre: string
           pasos_json: Json
+          rate_limit_diario: number | null
           trigger: string | null
           updated_at: string | null
+          ventana_horaria_fin: string | null
+          ventana_horaria_inicio: string | null
         }
         Insert: {
           activo?: boolean | null
+          config_json?: Json | null
           created_at?: string | null
           descripcion?: string | null
           id?: string
           nombre: string
           pasos_json: Json
+          rate_limit_diario?: number | null
           trigger?: string | null
           updated_at?: string | null
+          ventana_horaria_fin?: string | null
+          ventana_horaria_inicio?: string | null
         }
         Update: {
           activo?: boolean | null
+          config_json?: Json | null
           created_at?: string | null
           descripcion?: string | null
           id?: string
           nombre?: string
           pasos_json?: Json
+          rate_limit_diario?: number | null
           trigger?: string | null
           updated_at?: string | null
+          ventana_horaria_fin?: string | null
+          ventana_horaria_inicio?: string | null
         }
         Relationships: []
       }

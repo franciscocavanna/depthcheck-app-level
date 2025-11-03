@@ -8,3 +8,9 @@ verify_jwt = true
 
 [functions.score-run]
 verify_jwt = true
+
+[functions.dunning-run]
+verify_jwt = true
+
+[functions.agents-dispatch]
+verify_jwt = true
