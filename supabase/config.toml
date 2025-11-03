@@ -1,1 +1,10 @@
 project_id = "guqzwqcbvsgktabwqflq"
+
+[functions.generate-demo]
+verify_jwt = true
+
+[functions.train-model]
+verify_jwt = true
+
+[functions.score-run]
+verify_jwt = true
